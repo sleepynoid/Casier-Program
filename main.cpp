@@ -58,12 +58,17 @@ void removeItem(string namaBarang,goodsSale (&barang)[10]) {
     }
 }
 void viewcart(goodsSale (&barang)[10]) {
-    int tmpIndex[10],cart;
+    int tmpIndex[10],find = -1;
     for (int n=-1,i=0; i <= Index; i++) {
         if (barang[i].jumlah != 0) {
-            n++;
-            tmpIndex[n] = i;
+            tmpIndex[++find] = i;
         }
+    }
+    for (int i=0; i <= find ; i++) {
+        printf("barang %s\n", barang[tmpIndex[i]].nama.c_str());
+        printf("harga %d\n",barang[tmpIndex[i]].harga);
+        printf("stock %d\n",barang[tmpIndex[i]].stock);
+        printf("jumlah %d",barang[tmpIndex[i]].jumlah);
     }
 }
 int main() {
@@ -90,6 +95,7 @@ int main() {
             removeItem(nama, barang);
             break;
         case 3:
+            viewcart(barang);
             break;
         case 4:
             break;
