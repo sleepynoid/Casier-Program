@@ -6,12 +6,8 @@ struct goodsSale {
     string nama;
     int harga,stock,jumlah;
 };
-struct goodsCart {
-    string nama;
-    int harga,stock,jumlah;
-};
 struct goodsSale barang[10];
-struct goodsCart keranjang[10];
+struct goodsSale history[10];
 int Index = 1;
 
 int searchByName(string cariNama,goodsSale (&barang)[10]){
@@ -22,13 +18,6 @@ int searchByName(string cariNama,goodsSale (&barang)[10]){
         }
     }
     return tempIndex;
-}
-void addGoods() {
-    int tempIndex = Index++;
-    getline(cin,barang[tempIndex].nama);
-    cin >> barang[tempIndex].harga;
-    cin >> barang[tempIndex].stock;
-    Index++;
 }
 bool addsItem(string namaBarang,goodsSale (&barang)[10]) {
     int tmpIndex = searchByName(namaBarang,barang),tmpJumlah;
@@ -71,6 +60,24 @@ void viewcart(goodsSale (&barang)[10]) {
         printf("jumlah %d",barang[tmpIndex[i]].jumlah);
     }
 }
+void addGoods(string namaBarang, int harga, int stock, struct goodsSale (&barang)[10]) {
+    int tempIndex = ++Index;
+    barang[tempIndex].nama = namaBarang;
+    barang[tempIndex].harga = harga;
+    barang[tempIndex].stock = stock;
+}
+void addsHistory(goodsSale (&barang)[10]) {
+    int harga,stock;
+    string nama;
+    printf("Masukan Nama Barang : ");
+    getline(cin, nama);
+    printf("Masukan Harga Barang : ");
+    cin >> harga;
+    printf("Masukan Stock Barang : ");
+    cin >> stock;
+    addGoods(nama, harga, stock,barang);
+}
+
 int main() {
     barang[0] = {"mie sedaap", 3500, 20, 10};
     barang[1] = {"kecap", 2000, 15, 0};
@@ -82,6 +89,30 @@ int main() {
     printf("5. exit\n");
     int pilihan,tmp;
     string nama;
+    bool exit = false;
+    do {
+    cin >> pilihan;
+    cin.ignore();
+    switch (pilihan) {
+        case 1:
+            printf("Masukan Nama Barang : ");
+            getline(cin,nama);
+            addsItem(nama, barang);
+            break;
+        case 2:
+            getline(cin,nama);
+            removeItem(nama, barang);
+            break;
+        case 3:
+            viewcart(barang);
+            break;
+        case 4:
+            addsHistory(barang);
+            break;
+        case 5:
+            break;
+    }
+    }while (exit == false);
     cin >> pilihan;
     cin.ignore();
     switch (pilihan) {
