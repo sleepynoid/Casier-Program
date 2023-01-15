@@ -94,12 +94,12 @@ void checkout(goodsSale (&barang)[10]) {
     }
     int total = 0,tunai = 0;
     for (int i=0; i <= find; i++) {
-        printf("barang 1=%d barang 2=%d",barang[tmpIndex[find]].harga, barang[tmpIndex[find]].jumlah);
+        // printf("barang 1=%d barang 2=%d",barang[tmpIndex[find]].harga, barang[tmpIndex[find]].jumlah);
         total += barang[tmpIndex[find]].harga * barang[tmpIndex[find]].jumlah;
     }
-    cout << total;
+    // cout << total;
     while (tunai < total) {
-        printf("masukan tunai : ");
+        printf("masukan tunai [%d]: ",total);
         cin >> tunai;
         if (tunai < total) printf("tunai kurang");
     }
