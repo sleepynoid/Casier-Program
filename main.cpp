@@ -80,6 +80,25 @@ void addsHistory(goodsSale (&barang)[10],goodsSale (&history)[10]) {
         history[IndexHistory].jumlah = barang[tmpIndex[i]].jumlah;
     }
 }
+void checkout(goodsSale (&barang)[10]) {
+    int tmpIndex[10],find = -1;
+    for (int i=0; i <= Index; i++) {
+        if (barang[i].jumlah != 0) {
+            tmpIndex[++find] = i;
+        }
+    }
+    int total = 0,tunai = 0;
+    for (int i=0; i <= find; i++) {
+        printf("barang 1=%d barang 2=%d",barang[tmpIndex[find]].harga, barang[tmpIndex[find]].jumlah);
+        total += barang[tmpIndex[find]].harga * barang[tmpIndex[find]].jumlah;
+    }
+    cout << total;
+    while (tunai < total) {
+        printf("masukan tunai : ");
+        cin >> tunai;
+        if (tunai < total) printf("tunai kurang");
+    }
+}
 
 int main() {
     barang[0] = {"mie sedaap", 3500, 20, 10};
@@ -115,6 +134,7 @@ int main() {
         case 5:
             addsHistory(barang,history);
             viewcart(history);
+            checkout(barang);
             break;
     }
     }while (exit == false);
