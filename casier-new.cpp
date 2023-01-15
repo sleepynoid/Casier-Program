@@ -1,7 +1,11 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
+#include <chrono>
+#include <thread>
 using namespace std;
+using namespace std::this_thread;
+using namespace std::chrono_literals;
 struct goodsSale {
     string nama;
     int harga,stock,jumlah;
@@ -24,7 +28,7 @@ bool addsItem(string namaBarang,goodsSale (&barang)[10]) {
     int tmpJumlahMax = barang[tmpIndex].stock - barang[tmpIndex].jumlah;
     if (tmpIndex != -1 && tmpJumlahMax != 0) {
         do {
-            printf("Masukan jumlah %s yang anda beli [%d] : ", barang[tmpIndex].nama.c_str(), barang[tmpIndex].stock);
+            printf("Masukan jumlah %s yang anda beli [%d] : ", barang[tmpIndex].nama.c_str(), tmpJumlahMax);
             cin >> tmpJumlah;
             if (tmpJumlah > tmpJumlahMax) printf("Maaf Jumlah Pembelian Melebihi Stock\n");
             else if (tmpJumlah < 0) printf("Masukan Jumlah dengan Benar\n");
@@ -99,8 +103,7 @@ void checkout(goodsSale (&barang)[10]) {
         if (tunai < total) printf("tunai kurang");
     }
 }
-
-int main() {
+void _menu() {
     barang[0] = {"mie sedaap", 3500, 20, 10};
     barang[1] = {"kecap", 2000, 15, 0};
     printf("Menu\n");
@@ -109,42 +112,48 @@ int main() {
     printf("2. hapus barang dari keranjang\n");
     printf("3. melihat isi keranjang\n");
     printf("4. tambah barang ke stock\n");
-    printf("5. checkout");
+    printf("5. checkout\n");
     printf("6. exit\n");
+    printf("[1-6] ==> ");
+}
+
+int main() {
     int pilihan,tmp;
     string nama;
-    bool exit = false;
+    bool exit = false,first = false;
     do {
-    cin >> pilihan;
-    cin.ignore();
-    switch (pilihan) {
-        case 1:
-            printf("Masukan Nama Barang : ");
-            getline(cin,nama);
-            addsItem(nama, barang);
-            break;
-        case 2:
-            getline(cin,nama);
-            removeItem(nama, barang);
-            break;
-        case 3:
-            viewcart(barang);
-            break;
-        case 4:
-            printf("Masukan Nama Barang : ");
-            getline(cin,nama);
-            int harga,stock;
-            printf("Masukan Harga barang : ");
-            cin >> harga;
-            printf("Masukan Stok Barang : ");
-            cin >> stock;
-            addGoods(nama, harga, stock, barang);
-            break;
-        case 5:
-            addsHistory(barang,history);
-            viewcart(history);
-            checkout(barang);
-            break;
+        _menu();
+        cin >> pilihan;
+        cin.ignore();
+        switch (pilihan) {
+            case 1:
+                printf("Masukan Nama Barang : ");
+                getline(cin,nama);
+                addsItem(nama, barang);
+                break;
+            case 2:
+                getline(cin,nama);
+                removeItem(nama, barang);
+                break;
+            case 3:
+                viewcart(barang);
+                break;
+            case 4:
+                printf("Masukan Nama Barang : ");
+                getline(cin,nama);
+                int harga,stock;
+                printf("Masukan Harga barang : ");
+                cin >> harga;
+                printf("Masukan Stok Barang : ");
+                cin >> stock;
+                addGoods(nama, harga, stock, barang);
+                break;
+            case 5:
+                addsHistory(barang,history);
+                viewcart(history);
+                checkout(barang);
+                break;
     }
+    sleep_for(3s);
     }while (exit == false);
 }
