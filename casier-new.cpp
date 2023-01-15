@@ -104,6 +104,7 @@ int main() {
     barang[0] = {"mie sedaap", 3500, 20, 10};
     barang[1] = {"kecap", 2000, 15, 0};
     printf("Menu\n");
+    printf("mie sedaap kecap\n");
     printf("1. tambah barang ke keranjang\n");
     printf("2. hapus barang dari keranjang\n");
     printf("3. melihat isi keranjang\n");
@@ -130,6 +131,14 @@ int main() {
             viewcart(barang);
             break;
         case 4:
+            printf("Masukan Nama Barang : ");
+            getline(cin,nama);
+            int harga,stock;
+            printf("Masukan Harga barang : ");
+            cin >> harga;
+            printf("Masukan Stok Barang : ");
+            cin >> stock;
+            addGoods(nama, harga, stock, barang);
             break;
         case 5:
             addsHistory(barang,history);
@@ -138,24 +147,4 @@ int main() {
             break;
     }
     }while (exit == false);
-    cin >> pilihan;
-    cin.ignore();
-    switch (pilihan) {
-        case 1:
-            printf("Masukan Nama Barang : ");
-            getline(cin,nama);
-            addsItem(nama, barang);
-            break;
-        case 2:
-            getline(cin,nama);
-            removeItem(nama, barang);
-            break;
-        case 3:
-            viewcart(barang);
-            break;
-        case 4:
-            break;
-        case 5:
-            break;
-    }
 }
