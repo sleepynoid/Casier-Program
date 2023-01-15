@@ -8,7 +8,7 @@ struct goodsSale {
 };
 struct goodsSale barang[10];
 struct goodsSale history[10];
-int Index = 1;
+int Index = 1,IndexHistory = -1;
 
 int searchByName(string cariNama,goodsSale (&barang)[10]){
     int tempIndex = -1;
@@ -66,16 +66,19 @@ void addGoods(string namaBarang, int harga, int stock, struct goodsSale (&barang
     barang[tempIndex].harga = harga;
     barang[tempIndex].stock = stock;
 }
-void addsHistory(goodsSale (&barang)[10]) {
-    int harga,stock;
-    string nama;
-    printf("Masukan Nama Barang : ");
-    getline(cin, nama);
-    printf("Masukan Harga Barang : ");
-    cin >> harga;
-    printf("Masukan Stock Barang : ");
-    cin >> stock;
-    addGoods(nama, harga, stock,barang);
+void addsHistory(goodsSale (&barang)[10],goodsSale (&history)[10]) {
+    int tmpIndex[10],find = -1;
+    for (int i=0; i <= Index; i++) {
+        if (barang[i].jumlah != 0) {
+            tmpIndex[++find] = i;
+        }
+    }
+    for (int i=0; i <= find; i++) {
+        history[++IndexHistory].nama = barang[tmpIndex[i]].nama;
+        history[IndexHistory].harga = barang[tmpIndex[i]].harga;
+        history[IndexHistory].stock = barang[tmpIndex[i]].stock;
+        history[IndexHistory].jumlah = barang[tmpIndex[i]].jumlah;
+    }
 }
 
 int main() {
@@ -86,7 +89,8 @@ int main() {
     printf("2. hapus barang dari keranjang\n");
     printf("3. melihat isi keranjang\n");
     printf("4. tambah barang ke stock\n");
-    printf("5. exit\n");
+    printf("5. checkout");
+    printf("6. exit\n");
     int pilihan,tmp;
     string nama;
     bool exit = false;
@@ -107,9 +111,10 @@ int main() {
             viewcart(barang);
             break;
         case 4:
-            addsHistory(barang);
             break;
         case 5:
+            addsHistory(barang,history);
+            viewcart(history);
             break;
     }
     }while (exit == false);
