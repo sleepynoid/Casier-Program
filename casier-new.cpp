@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iterator>
 #include <stdio.h>
 #include <string>
 #include <chrono>
@@ -61,7 +62,7 @@ void viewcart(goodsSale (&barang)[10]) {
         printf("barang %s\n", barang[tmpIndex[i]].nama.c_str());
         printf("harga %d\n",barang[tmpIndex[i]].harga);
         printf("stock %d\n",barang[tmpIndex[i]].stock);
-        printf("jumlah %d",barang[tmpIndex[i]].jumlah);
+        printf("jumlah %d\n",barang[tmpIndex[i]].jumlah);
     }
 }
 void addGoods(string namaBarang, int harga, int stock, struct goodsSale (&barang)[10]) {
